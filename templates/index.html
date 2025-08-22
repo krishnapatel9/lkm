@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Churn Prediction</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Customer Churn Prediction</h1>
+            <p class="subtitle">Predict customer retention with AI-powered insights</p>
+        </div>
+        
+        <form action="/predict" method="post" class="prediction-form">
+            <div class="form-group">
+                <label for="Tenure">Tenure (months)</label>
+                <input type="number" id="Tenure" name="Tenure" required placeholder="Enter tenure in months">
+            </div>
+            
+            <div class="form-group">
+                <label for="Payment Delay">Payment Delay (days)</label>
+                <input type="number" id="Payment Delay" name="Payment Delay" required placeholder="Enter payment delay">
+            </div>
+            
+            <div class="form-group">
+                <label for="Subscription Type">Subscription Type</label>
+                <select id="Subscription Type" name="Subscription Type">
+                    <option value="Basic">Basic</option>
+                    <option value="Standard">Standard</option>
+                    <option value="Premium">Premium</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="Contract Length">Contract Length</label>
+                <select id="Contract Length" name="Contract Length">
+                    <option value="Monthly">Monthly</option>
+                    <option value="Quarterly">Quarterly</option>
+                    <option value="Annual">Annual</option>
+                </select>
+            </div>
+            
+            <button type="submit" class="submit-btn">
+                <span>Predict Churn</span>
+            </button>
+        </form>
+
+        {% if prediction_text %}
+            <div class="prediction-result">
+                <div class="result-icon">
+                    {% if 'not' in prediction_text.lower() %}
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                            <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                        </svg>
+                    {% else %}
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="12" y1="8" x2="12" y2="12"></line>
+                            <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                        </svg>
+                    {% endif %}
+                </div>
+                <p>{{ prediction_text }}</p>
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>
